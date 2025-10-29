@@ -203,17 +203,13 @@ class Runner(object):
         print(log)
 
     def get_ncores(self):
-        hw_thr_cnts_map = {
-            Runner.CORE_FINE_GRAIN:cpupol.test_hw_thr_cnts_fine_grain,
-            Runner.CORE_COARSE_GRAIN:cpupol.test_hw_thr_cnts_coarse_grain,
-        }
+        # 生成倍增序列，可以超过一次直到1024
         ncores = []
-        test_hw_thr_cnts = hw_thr_cnts_map.get(self.CORE_GRAIN,
-                                               cpupol.test_hw_thr_cnts_fine_grain)
-        for n in test_hw_thr_cnts:
-            if n > self.npcpu:
-                break
-            ncores.append(n)
+        n = 1
+        while n <= 1024:
+            if n <= 2*self.nhwthr:  # 不超过系统最大硬件线程数
+                ncores.append(n)
+            n *= 2
         return ncores
 
     def exec_cmd(self, cmd, out=None):
