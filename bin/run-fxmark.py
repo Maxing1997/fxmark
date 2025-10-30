@@ -25,7 +25,7 @@ def catch_ctrl_C(sig, frame):
 class Runner(object):
     # media path
     LOOPDEV = "/dev/loopX"
-    NVMEDEV = "/dev/nvme0n1pX"
+    NVMEDEV = "/dev/nvme3n1p1"
     HDDDEV  = "/dev/sdX"
     SSDDEV  = "/dev/sdY"
 
@@ -513,7 +513,7 @@ if __name__ == "__main__":
     run_config = [
         (Runner.CORE_FINE_GRAIN,
          PerfMon.LEVEL_LOW,
-         ("mem", "*", "DWOL", "80", "directio")),
+         ("nvme", "ext4", "*", "*", "bufferredio")),
         # ("mem", "tmpfs", "filebench_varmail", "32", "directio")),
         # (Runner.CORE_COARSE_GRAIN,
         #  PerfMon.LEVEL_PERF_RECORD,
