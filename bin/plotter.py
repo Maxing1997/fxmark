@@ -37,6 +37,7 @@ class Plotter(object):
         self.config = self._get_config()
         self.ncore = int(self.parser.get_config("PHYSICAL_CHIPS")) * \
                      int(self.parser.get_config("CORE_PER_CHIP"))
+        self.ncore = 1024
         self.out_dir  = ""
         self.out_file = ""
         self.out = 0

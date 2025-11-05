@@ -134,7 +134,7 @@ class PerfMon(object):
         # - steal: involuntary wait
         # - guest: running a normal guest
         # - guest_nice: running a niced guest
-        p = self._exec_cmd("sudo cat /proc/stat", subprocess.PIPE)
+        p = self._exec_cmd("sudo cat /proc/stat|grep cpu", subprocess.PIPE)
         ncpus = 0
         cpu_stat = []
         for l in p.stdout.readlines():

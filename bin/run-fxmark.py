@@ -207,9 +207,11 @@ class Runner(object):
         ncores = []
         n = 1
         while n <= 1024:
-            if n <= 2*self.nhwthr:  # 不超过系统最大硬件线程数
+            if n <= self.nhwthr:  # 不超过系统最大硬件线程数
                 ncores.append(n)
             n *= 2
+        ncores.append(self.nhwthr)
+        ncores=[1, 2, 4, 8, 16, 32, 64, 128,  256, 512, 768]
         return ncores
 
     def exec_cmd(self, cmd, out=None):
@@ -513,7 +515,7 @@ if __name__ == "__main__":
     run_config = [
         (Runner.CORE_FINE_GRAIN,
          PerfMon.LEVEL_LOW,
-         ("nvme", "ext4", "*", "*", "bufferredio")),
+         ("nvme", "ext4", "*", "*", "bufferedio")),
         # ("mem", "tmpfs", "filebench_varmail", "32", "directio")),
         # (Runner.CORE_COARSE_GRAIN,
         #  PerfMon.LEVEL_PERF_RECORD,
